@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InvestBuddy - Investment Education Platform</title>
+    <meta name="description" content="Professional investment education platform for Korean beginners. Learn chart analysis, trading patterns, and investment strategies through interactive simulations.">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #2d3748;
+            background: #ffffff;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            background: #ffffff;
+            border-bottom: 1px solid #e2e8f0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #1a202c;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: #4a5568;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: #1a202c;
+        }
+        
+        main {
+            margin-top: 80px;
+        }
+        
+        .hero {
+            background: #f7fafc;
+            padding: 6rem 0;
+            text-align: center;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+            color: #1a202c;
+        }
+        
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            color: #4a5568;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .status-badge {
+            display: inline-block;
+            background: #edf2f7;
+            color: #2d3748;
+            padding: 0.8rem 2rem;
+            border-radius: 6px;
+            font-weight: 600;
+            margin-top: 1rem;
+            border: 1px solid #e2e8f0;
+        }
+        
+        .section {
+            padding: 5rem 0;
+        }
+        
+        .section h2 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: #1a202c;
+            font-weight: 600;
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .feature-card {
+            background: #ffffff;
+            padding: 2rem;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        
+        .feature-card h3 {
+            color: #1a202c;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+        
+        .feature-card p {
+            color: #4a5568;
+            line-height: 1.6;
+        }
+        
+        .tech-stack {
+            background: #f7fafc;
+            border-radius: 8px;
+            padding: 2rem;
+            border: 1px solid #e2e8f0;
+        }
+        
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .tech-category h4 {
+            color: #1a202c;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+        
+        .tech-list {
+            list-style: none;
+        }
+        
+        .tech-list li {
+            padding: 0.3rem 0;
+            color: #4a5568;
+        }
+        
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .timeline-item {
+            background: #ffffff;
+            padding: 2rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            border: 1px solid #e2e8f0;
+            position: relative;
+        }
+        
+        .timeline-date {
+            color: #1a202c;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .timeline-item h3 {
+            color: #1a202c;
+            margin: 0.5rem 0 1rem 0;
+            font-weight: 600;
+        }
+        
+        .timeline-item p {
+            color: #4a5568;
+        }
+        
+        .team {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .team-member {
+            background: #ffffff;
+            padding: 2rem;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid #e2e8f0;
+        }
+        
+        .member-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: #edf2f7;
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #1a202c;
+            font-size: 1.5rem;
+            font-weight: 600;
+            border: 2px solid #e2e8f0;
+        }
+        
+        .team-member h3 {
+            color: #1a202c;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+        
+        .team-member p {
+            color: #4a5568;
+            margin-bottom: 1rem;
+        }
+        
+        .contact {
+            background: #1a202c;
+            color: #ffffff;
+            text-align: center;
+        }
+        
+        .contact h2 {
+            color: #ffffff;
+        }
+        
+        .contact-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .contact-item {
+            padding: 1.5rem;
+            background: #2d3748;
+            border-radius: 8px;
+        }
+        
+        .contact-item h4 {
+            color: #ffffff;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+        
+        .contact-item p {
+            color: #cbd5e0;
+        }
+        
+        footer {
+            background: #2d3748;
+            color: #cbd5e0;
+            text-align: center;
+            padding: 2rem 0;
+        }
+        
+        .gray-section {
+            background: #f7fafc;
+        }
+        
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .section {
+                padding: 3rem 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <div class="logo">InvestBuddy</div>
+            <ul class="nav-links">
+                <li><a href="#about">About</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#technology">Technology</a></li>
+                <li><a href="#roadmap">Roadmap</a></li>
+                <li><a href="#team">Team</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h1>InvestBuddy</h1>
+                <p>Professional investment education platform designed for beginners. Learn chart analysis, trading patterns, and investment strategies through interactive simulations and personalized guidance.</p>
+                <div class="status-badge">
+                    In Development - Launching 2026
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="section">
+            <div class="container">
+                <h2>Democratizing Investment Education</h2>
+                <p style="text-align: center; font-size: 1.2rem; max-width: 800px; margin: 0 auto; color: #4a5568;">
+                    InvestBuddy bridges the gap between complex financial markets and everyday investors. Our platform provides comprehensive investment education through interactive chart analysis, historical market simulations, and AI-powered personalized guidance tailored for the Korean market.
+                </p>
+            </div>
+        </section>
+
+        <section id="features" class="section gray-section">
+            <div class="container">
+                <h2>Core Features</h2>
+                <div class="features">
+                    <div class="feature-card">
+                        <h3>Interactive Chart Education</h3>
+                        <p>Learn chart patterns, technical indicators, and trend analysis through guided tutorials and hands-on practice with professional-grade charting tools.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>Historical Market Simulation</h3>
+                        <p>Experience major market events like the 2020 COVID crash through time-machine simulations. Practice trading in historical contexts with real market data.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>AI-Powered Personalization</h3>
+                        <p>Receive customized investment strategies based on your risk tolerance, investment goals, and learning progress through advanced AI algorithms.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>Investment Style Analysis</h3>
+                        <p>Discover your investment personality through comprehensive assessment and get tailored education content that matches your learning style and risk preferences.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>Risk-Free Learning Environment</h3>
+                        <p>Practice with virtual money in a completely safe environment. Make mistakes, learn from them, and build confidence before real investing.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>Mobile-First Design</h3>
+                        <p>Learn anywhere, anytime with our native Android application optimized for mobile learning and professional chart analysis on the go.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="technology" class="section">
+            <div class="container">
+                <h2>Technology Stack</h2>
+                <div class="tech-stack">
+                    <div class="tech-grid">
+                        <div class="tech-category">
+                            <h4>Frontend</h4>
+                            <ul class="tech-list">
+                                <li>Android (Kotlin)</li>
+                                <li>Jetpack Compose</li>
+                                <li>TradingView Charts</li>
+                                <li>Material Design 3</li>
+                            </ul>
+                        </div>
+                        <div class="tech-category">
+                            <h4>Backend</h4>
+                            <ul class="tech-list">
+                                <li>Spring Boot (Java 17)</li>
+                                <li>MySQL Database</li>
+                                <li>Redis Caching</li>
+                                <li>JWT Authentication</li>
+                            </ul>
+                        </div>
+                        <div class="tech-category">
+                            <h4>AI & Analytics</h4>
+                            <ul class="tech-list">
+                                <li>Python FastAPI</li>
+                                <li>PostgreSQL</li>
+                                <li>Scikit-learn</li>
+                                <li>FinBERT</li>
+                            </ul>
+                        </div>
+                        <div class="tech-category">
+                            <h4>Data Sources</h4>
+                            <ul class="tech-list">
+                                <li>Yahoo Finance API</li>
+                                <li>Alpha Vantage API</li>
+                                <li>Korean Securities APIs</li>
+                                <li>Economic News APIs</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="roadmap" class="section gray-section">
+            <div class="container">
+                <h2>Development Roadmap</h2>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-date">Phase 1 - Q1 2026</div>
+                        <h3>Foundation & Core Features</h3>
+                        <p>User authentication, investment style assessment, basic chart integration, and core mobile app architecture development.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">Phase 2 - Q2 2026</div>
+                        <h3>Chart Education & AI Integration</h3>
+                        <p>Advanced charting capabilities, pattern recognition algorithms, AI-powered personalization engine, and interactive educational modules.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">Phase 3 - Q3 2026</div>
+                        <h3>Simulation & Testing</h3>
+                        <p>Historical market simulation, mock trading platform, comprehensive beta testing program, and user feedback integration.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">Phase 4 - Q4 2026</div>
+                        <h3>Launch & Expansion</h3>
+                        <p>Official public launch, user onboarding optimization, performance monitoring, and preparation for advanced features rollout.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="team" class="section">
+            <div class="container">
+                <h2>Development Team</h2>
+                <div class="team">
+                    <div class="team-member">
+                        <div class="member-avatar">GP</div>
+                        <h3>Gyeongchan Park</h3>
+                        <p><strong>Lead Developer</strong></p>
+                        <p>Freelance Android developer specializing in financial applications and user experience design. Experienced in creating intuitive interfaces for complex financial data and chart analysis.</p>
+                    </div>
+                    <div class="team-member">
+                        <div class="member-avatar">BD</div>
+                        <h3>Backend Development</h3>
+                        <p><strong>Senior Backend Engineer</strong></p>
+                        <p>Freelance backend specialist with expertise in financial data processing, API development, and high-performance system architecture.</p>
+                    </div>
+                    <div class="team-member">
+                        <div class="member-avatar">AI</div>
+                        <h3>AI Engineering</h3>
+                        <p><strong>Machine Learning Engineer</strong></p>
+                        <p>Independent AI consultant specializing in financial data analysis, pattern recognition, and personalized recommendation systems.</p>
+                    </div>
+                    <div class="team-member">
+                        <div class="member-avatar">QA</div>
+                        <h3>Quality Assurance</h3>
+                        <p><strong>QA Engineer & Project Manager</strong></p>
+                        <p>Freelance quality assurance professional with experience in financial software testing and agile project management methodologies.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="contact section">
+            <div class="container">
+                <h2>Get In Touch</h2>
+                <p style="font-size: 1.2rem; opacity: 0.9; margin-bottom: 2rem;">
+                    Interested in partnerships, investment opportunities, or early access? We would love to hear from you.
+                </p>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <h4>Business Inquiries</h4>
+                        <p>investbuddy@investbuddy.kro.kr</p>
+                    </div>
+                    <div class="contact-item">
+                        <h4>Partnership Opportunities</h4>
+                        <p>partnerships@investbuddy.kro.kr</p>
+                    </div>
+                    <div class="contact-item">
+                        <h4>Investment & Funding</h4>
+                        <p>investors@investbuddy.kro.kr</p>
+                    </div>
+                    <div class="contact-item">
+                        <h4>Company Information</h4>
+                        <p>Team Carrot (InvestBuddy)<br>Seoul, South Korea</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 InvestBuddy. All rights reserved. Building the future of investment education.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add scroll effect to header
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
+            } else {
+                header.style.boxShadow = 'none';
+            }
+        });
+    </script>
+</body>
+</html>

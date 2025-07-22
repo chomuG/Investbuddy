@@ -1,543 +1,367 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>InvestBuddy - Investment Education Platform</title>
-    <meta name="description" content="Professional investment education platform for Korean beginners. Learn chart analysis, trading patterns, and investment strategies through interactive simulations.">
+    <title>TradingView 위젯 - InvestBuddy</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            line-height: 1.6;
-            color: #2d3748;
-            background: #ffffff;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: #0d1421;
+            color: white;
         }
         
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
-            padding: 0 20px;
         }
         
-        header {
-            background: #ffffff;
-            border-bottom: 1px solid #e2e8f0;
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-        }
-        
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 0;
-        }
-        
-        .logo {
-            font-size: 1.8rem;
-            font-weight: 600;
-            color: #1a202c;
-        }
-        
-        .nav-links {
-            display: flex;
-            list-style: none;
-            gap: 2rem;
-        }
-        
-        .nav-links a {
-            text-decoration: none;
-            color: #4a5568;
-            font-weight: 500;
-            transition: color 0.3s;
-        }
-        
-        .nav-links a:hover {
-            color: #1a202c;
-        }
-        
-        main {
-            margin-top: 80px;
-        }
-        
-        .hero {
-            background: #f7fafc;
-            padding: 6rem 0;
+        .header {
             text-align: center;
-            border-bottom: 1px solid #e2e8f0;
+            margin-bottom: 30px;
         }
         
-        .hero h1 {
-            font-size: 3.5rem;
-            margin-bottom: 1rem;
-            font-weight: 700;
-            color: #1a202c;
+        .header h1 {
+            color: #2962ff;
+            margin-bottom: 10px;
         }
         
-        .hero p {
-            font-size: 1.3rem;
-            margin-bottom: 2rem;
-            color: #4a5568;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
         }
         
-        .status-badge {
-            display: inline-block;
-            background: #edf2f7;
-            color: #2d3748;
-            padding: 0.8rem 2rem;
+        .btn {
+            background: #2962ff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
             border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.2s;
+        }
+        
+        .btn:hover {
+            background: #1e4fbb;
+        }
+        
+        .btn.active {
+            background: #00c851;
+        }
+        
+        .chart-section {
+            background: #1e222d;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .chart-title {
+            color: #d1d4dc;
+            margin-bottom: 15px;
+            font-size: 18px;
             font-weight: 600;
-            margin-top: 1rem;
-            border: 1px solid #e2e8f0;
-        }
-        
-        .section {
-            padding: 5rem 0;
-        }
-        
-        .section h2 {
-            font-size: 2.5rem;
             text-align: center;
-            margin-bottom: 3rem;
-            color: #1a202c;
-            font-weight: 600;
         }
         
-        .features {
+        /* 위젯 컨테이너들 */
+        .widget-row {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
         }
         
-        .feature-card {
-            background: #ffffff;
-            padding: 2rem;
+        .widget-container {
+            background: white;
             border-radius: 8px;
-            border: 1px solid #e2e8f0;
-            transition: transform 0.3s, box-shadow 0.3s;
+            overflow: hidden;
+            height: 400px;
         }
         
-        .feature-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-        }
-        
-        .feature-card h3 {
-            color: #1a202c;
-            margin-bottom: 1rem;
-            font-weight: 600;
-        }
-        
-        .feature-card p {
-            color: #4a5568;
-            line-height: 1.6;
-        }
-        
-        .tech-stack {
-            background: #f7fafc;
+        .single-widget {
+            background: white;
             border-radius: 8px;
-            padding: 2rem;
-            border: 1px solid #e2e8f0;
+            overflow: hidden;
+            height: 600px;
+            margin-bottom: 30px;
         }
         
-        .tech-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-        
-        .tech-category h4 {
-            color: #1a202c;
-            margin-bottom: 1rem;
-            font-size: 1.1rem;
-            font-weight: 600;
-        }
-        
-        .tech-list {
-            list-style: none;
-        }
-        
-        .tech-list li {
-            padding: 0.3rem 0;
-            color: #4a5568;
-        }
-        
-        .timeline {
-            position: relative;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        
-        .timeline-item {
-            background: #ffffff;
-            padding: 2rem;
-            border-radius: 8px;
-            margin-bottom: 2rem;
-            border: 1px solid #e2e8f0;
-            position: relative;
-        }
-        
-        .timeline-date {
-            color: #1a202c;
-            font-weight: 600;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        
-        .timeline-item h3 {
-            color: #1a202c;
-            margin: 0.5rem 0 1rem 0;
-            font-weight: 600;
-        }
-        
-        .timeline-item p {
-            color: #4a5568;
-        }
-        
-        .team {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-        
-        .team-member {
-            background: #ffffff;
-            padding: 2rem;
-            border-radius: 8px;
-            text-align: center;
-            border: 1px solid #e2e8f0;
-        }
-        
-        .member-avatar {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            background: #edf2f7;
-            margin: 0 auto 1rem;
+        .fallback-chart {
+            width: 100%;
+            height: 100%;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #1a202c;
-            font-size: 1.5rem;
-            font-weight: 600;
-            border: 2px solid #e2e8f0;
-        }
-        
-        .team-member h3 {
-            color: #1a202c;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-        }
-        
-        .team-member p {
-            color: #4a5568;
-            margin-bottom: 1rem;
-        }
-        
-        .contact {
-            background: #1a202c;
-            color: #ffffff;
-            text-align: center;
-        }
-        
-        .contact h2 {
-            color: #ffffff;
-        }
-        
-        .contact-info {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-        
-        .contact-item {
-            padding: 1.5rem;
-            background: #2d3748;
-            border-radius: 8px;
-        }
-        
-        .contact-item h4 {
-            color: #ffffff;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-        }
-        
-        .contact-item p {
-            color: #cbd5e0;
-        }
-        
-        footer {
-            background: #2d3748;
-            color: #cbd5e0;
-            text-align: center;
-            padding: 2rem 0;
-        }
-        
-        .gray-section {
-            background: #f7fafc;
+            background: #f8f9fa;
+            color: #333;
+            font-size: 16px;
         }
         
         @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2.5rem;
+            .widget-row {
+                grid-template-columns: 1fr;
             }
-            
-            .nav-links {
-                display: none;
-            }
-            
-            .section {
-                padding: 3rem 0;
-            }
+        }
+        
+        .tips {
+            background: linear-gradient(135deg, #2962ff, #1e4fbb);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .tips h3 {
+            margin: 0 0 10px 0;
         }
     </style>
 </head>
 <body>
-    <header>
-        <nav class="container">
-            <div class="logo">InvestBuddy</div>
-            <ul class="nav-links">
-                <li><a href="#about">About</a></li>
-                <li><a href="#features">Features</a></li>
-                <li><a href="#technology">Technology</a></li>
-                <li><a href="#roadmap">Roadmap</a></li>
-                <li><a href="#team">Team</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-        </nav>
-    </header>
-
-    <main>
-        <section class="hero">
-            <div class="container">
-                <h1>InvestBuddy</h1>
-                <p>Professional investment education platform designed for beginners. Learn chart analysis, trading patterns, and investment strategies through interactive simulations and personalized guidance.</p>
-                <div class="status-badge">
-                    In Development - Launching 2026
-                </div>
-            </div>
-        </section>
-
-        <section id="about" class="section">
-            <div class="container">
-                <h2>Democratizing Investment Education</h2>
-                <p style="text-align: center; font-size: 1.2rem; max-width: 800px; margin: 0 auto; color: #4a5568;">
-                    InvestBuddy bridges the gap between complex financial markets and everyday investors. Our platform provides comprehensive investment education through interactive chart analysis, historical market simulations, and AI-powered personalized guidance tailored for the Korean market.
-                </p>
-            </div>
-        </section>
-
-        <section id="features" class="section gray-section">
-            <div class="container">
-                <h2>Core Features</h2>
-                <div class="features">
-                    <div class="feature-card">
-                        <h3>Interactive Chart Education</h3>
-                        <p>Learn chart patterns, technical indicators, and trend analysis through guided tutorials and hands-on practice with professional-grade charting tools.</p>
-                    </div>
-                    <div class="feature-card">
-                        <h3>Historical Market Simulation</h3>
-                        <p>Experience major market events like the 2020 COVID crash through time-machine simulations. Practice trading in historical contexts with real market data.</p>
-                    </div>
-                    <div class="feature-card">
-                        <h3>AI-Powered Personalization</h3>
-                        <p>Receive customized investment strategies based on your risk tolerance, investment goals, and learning progress through advanced AI algorithms.</p>
-                    </div>
-                    <div class="feature-card">
-                        <h3>Investment Style Analysis</h3>
-                        <p>Discover your investment personality through comprehensive assessment and get tailored education content that matches your learning style and risk preferences.</p>
-                    </div>
-                    <div class="feature-card">
-                        <h3>Risk-Free Learning Environment</h3>
-                        <p>Practice with virtual money in a completely safe environment. Make mistakes, learn from them, and build confidence before real investing.</p>
-                    </div>
-                    <div class="feature-card">
-                        <h3>Mobile-First Design</h3>
-                        <p>Learn anywhere, anytime with our native Android application optimized for mobile learning and professional chart analysis on the go.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="technology" class="section">
-            <div class="container">
-                <h2>Technology Stack</h2>
-                <div class="tech-stack">
-                    <div class="tech-grid">
-                        <div class="tech-category">
-                            <h4>Frontend</h4>
-                            <ul class="tech-list">
-                                <li>Android (Kotlin)</li>
-                                <li>Jetpack Compose</li>
-                                <li>TradingView Charts</li>
-                                <li>Material Design 3</li>
-                            </ul>
-                        </div>
-                        <div class="tech-category">
-                            <h4>Backend</h4>
-                            <ul class="tech-list">
-                                <li>Spring Boot (Java 17)</li>
-                                <li>MySQL Database</li>
-                                <li>Redis Caching</li>
-                                <li>JWT Authentication</li>
-                            </ul>
-                        </div>
-                        <div class="tech-category">
-                            <h4>AI & Analytics</h4>
-                            <ul class="tech-list">
-                                <li>Python FastAPI</li>
-                                <li>PostgreSQL</li>
-                                <li>Scikit-learn</li>
-                                <li>FinBERT</li>
-                            </ul>
-                        </div>
-                        <div class="tech-category">
-                            <h4>Data Sources</h4>
-                            <ul class="tech-list">
-                                <li>Yahoo Finance API</li>
-                                <li>Alpha Vantage API</li>
-                                <li>Korean Securities APIs</li>
-                                <li>Economic News APIs</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="roadmap" class="section gray-section">
-            <div class="container">
-                <h2>Development Roadmap</h2>
-                <div class="timeline">
-                    <div class="timeline-item">
-                        <div class="timeline-date">Phase 1 - Q1 2026</div>
-                        <h3>Foundation & Core Features</h3>
-                        <p>User authentication, investment style assessment, basic chart integration, and core mobile app architecture development.</p>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-date">Phase 2 - Q2 2026</div>
-                        <h3>Chart Education & AI Integration</h3>
-                        <p>Advanced charting capabilities, pattern recognition algorithms, AI-powered personalization engine, and interactive educational modules.</p>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-date">Phase 3 - Q3 2026</div>
-                        <h3>Simulation & Testing</h3>
-                        <p>Historical market simulation, mock trading platform, comprehensive beta testing program, and user feedback integration.</p>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-date">Phase 4 - Q4 2026</div>
-                        <h3>Launch & Expansion</h3>
-                        <p>Official public launch, user onboarding optimization, performance monitoring, and preparation for advanced features rollout.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="team" class="section">
-            <div class="container">
-                <h2>Development Team</h2>
-                <div class="team">
-                    <div class="team-member">
-                        <div class="member-avatar">GP</div>
-                        <h3>Gyeongchan Park</h3>
-                        <p><strong>Lead Developer</strong></p>
-                        <p>Freelance Android developer specializing in financial applications and user experience design. Experienced in creating intuitive interfaces for complex financial data and chart analysis.</p>
-                    </div>
-                    <div class="team-member">
-                        <div class="member-avatar">BD</div>
-                        <h3>Backend Development</h3>
-                        <p><strong>Senior Backend Engineer</strong></p>
-                        <p>Freelance backend specialist with expertise in financial data processing, API development, and high-performance system architecture.</p>
-                    </div>
-                    <div class="team-member">
-                        <div class="member-avatar">AI</div>
-                        <h3>AI Engineering</h3>
-                        <p><strong>Machine Learning Engineer</strong></p>
-                        <p>Independent AI consultant specializing in financial data analysis, pattern recognition, and personalized recommendation systems.</p>
-                    </div>
-                    <div class="team-member">
-                        <div class="member-avatar">QA</div>
-                        <h3>Quality Assurance</h3>
-                        <p><strong>QA Engineer & Project Manager</strong></p>
-                        <p>Freelance quality assurance professional with experience in financial software testing and agile project management methodologies.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="contact" class="contact section">
-            <div class="container">
-                <h2>Get In Touch</h2>
-                <p style="font-size: 1.2rem; opacity: 0.9; margin-bottom: 2rem;">
-                    Interested in partnerships, investment opportunities, or early access? We would love to hear from you.
-                </p>
-                <div class="contact-info">
-                    <div class="contact-item">
-                        <h4>Business Inquiries</h4>
-                        <p>investbuddy@investbuddy.kro.kr</p>
-                    </div>
-                    <div class="contact-item">
-                        <h4>Partnership Opportunities</h4>
-                        <p>partnerships@investbuddy.kro.kr</p>
-                    </div>
-                    <div class="contact-item">
-                        <h4>Investment & Funding</h4>
-                        <p>investors@investbuddy.kro.kr</p>
-                    </div>
-                    <div class="contact-item">
-                        <h4>Company Information</h4>
-                        <p>Team Carrot (InvestBuddy)<br>Seoul, South Korea</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <footer>
-        <div class="container">
-            <p>&copy; 2025 InvestBuddy. All rights reserved. Building the future of investment education.</p>
+    <div class="container">
+        <div class="header">
+            <h1>📈 TradingView 위젯 모음</h1>
+            <p>실시간 차트 - 여러 종류의 위젯으로 테스트</p>
         </div>
-    </footer>
+        
+        <div class="controls">
+            <button class="btn active" onclick="loadAllWidgets()">🔄 모든 위젯 로드</button>
+            <button class="btn" onclick="loadAdvancedChart()">📊 고급 차트</button>
+            <button class="btn" onclick="loadMiniChart()">📈 미니 차트</button>
+            <button class="btn" onclick="loadSymbolOverview()">🎯 종목 정보</button>
+        </div>
+        
+        <!-- 고급 차트 (메인) -->
+        <div class="chart-section">
+            <div class="chart-title">고급 차트 - Apple Inc. (AAPL)</div>
+            <div id="advanced-chart" class="single-widget">
+                <div class="fallback-chart">차트 로딩 중...</div>
+            </div>
+        </div>
+        
+        <!-- 작은 위젯들 -->
+        <div class="widget-row">
+            <!-- 미니 차트 -->
+            <div class="chart-section">
+                <div class="chart-title">미니 차트</div>
+                <div id="mini-chart" class="widget-container">
+                    <div class="fallback-chart">미니 차트 로딩 중...</div>
+                </div>
+            </div>
+            
+            <!-- 종목 정보 -->
+            <div class="chart-section">
+                <div class="chart-title">종목 정보</div>
+                <div id="symbol-overview" class="widget-container">
+                    <div class="fallback-chart">종목 정보 로딩 중...</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 마켓 개요 -->
+        <div class="widget-row">
+            <div class="chart-section">
+                <div class="chart-title">마켓 개요</div>
+                <div id="market-overview" class="widget-container">
+                    <div class="fallback-chart">마켓 개요 로딩 중...</div>
+                </div>
+            </div>
+            
+            <!-- 경제 캘린더 -->
+            <div class="chart-section">
+                <div class="chart-title">경제 캘린더</div>
+                <div id="economic-calendar" class="widget-container">
+                    <div class="fallback-chart">경제 캘린더 로딩 중...</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="tips">
+            <h3>💡 InvestBuddy 완벽 솔루션</h3>
+            <p>위 위젯들 중 하나라도 정상 작동하면 프로젝트에 바로 사용할 수 있습니다!</p>
+        </div>
+    </div>
 
     <script>
-        // Smooth scrolling for navigation links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
+        // 위젯 로딩 함수들
+        function createTradingViewWidget(containerId, widgetType, config = {}) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            
+            // 기본 설정
+            const defaultConfig = {
+                autosize: true,
+                symbol: "NASDAQ:AAPL",
+                interval: "D",
+                timezone: "Asia/Seoul",
+                theme: "light",
+                style: "1",
+                locale: "ko",
+                toolbar_bg: "#f1f3f6",
+                enable_publishing: false,
+                hide_side_toolbar: false,
+                allow_symbol_change: true,
+                details: true,
+                hotlist: true,
+                calendar: false
+            };
+            
+            // 설정 병합
+            const finalConfig = { ...defaultConfig, ...config };
+            
+            // 컨테이너 HTML 생성
+            const widgetHtml = `
+                <div class="tradingview-widget-container" style="height:100%;width:100%">
+                    <div class="tradingview-widget-container__widget" style="height:calc(100% - 32px);width:100%"></div>
+                    <div class="tradingview-widget-copyright" style="height:32px;">
+                        <a href="https://www.tradingview.com/" rel="noopener nofollow" target="_blank">
+                            <span class="blue-text">Track all markets on TradingView</span>
+                        </a>
+                    </div>
+                </div>
+            `;
+            
+            container.innerHTML = widgetHtml;
+            
+            // 스크립트 생성 및 로드
+            const script = document.createElement('script');
+            script.type = 'text/javascript';
+            script.src = getWidgetScriptUrl(widgetType);
+            script.async = true;
+            script.innerHTML = JSON.stringify(finalConfig);
+            
+            // 로딩 완료 처리
+            script.onload = () => {
+                console.log(`${widgetType} 위젯 로드 성공: ${containerId}`);
+            };
+            
+            script.onerror = () => {
+                console.error(`${widgetType} 위젯 로드 실패: ${containerId}`);
+                container.innerHTML = `
+                    <div class="fallback-chart">
+                        <div>❌ ${widgetType} 로딩 실패</div>
+                        <div style="font-size: 12px; margin-top: 10px;">
+                            <button onclick="createTradingViewWidget('${containerId}', '${widgetType}', ${JSON.stringify(config)})" 
+                                    style="padding: 5px 10px; background: #2962ff; color: white; border: none; border-radius: 4px; cursor: pointer;">
+                                재시도
+                            </button>
+                        </div>
+                    </div>
+                `;
+            };
+            
+            container.appendChild(script);
+        }
+        
+        function getWidgetScriptUrl(widgetType) {
+            const urls = {
+                'advanced-chart': 'https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js',
+                'mini-chart': 'https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js',
+                'symbol-overview': 'https://s3.tradingview.com/external-embedding/embed-widget-symbol-overview.js',
+                'market-overview': 'https://s3.tradingview.com/external-embedding/embed-widget-market-overview.js',
+                'economic-calendar': 'https://s3.tradingview.com/external-embedding/embed-widget-events.js'
+            };
+            return urls[widgetType] || urls['advanced-chart'];
+        }
+        
+        // 개별 위젯 로딩 함수들
+        function loadAdvancedChart() {
+            createTradingViewWidget('advanced-chart', 'advanced-chart', {
+                height: 580,
+                hide_top_toolbar: false,
+                hide_legend: false,
+                save_image: false
             });
+        }
+        
+        function loadMiniChart() {
+            createTradingViewWidget('mini-chart', 'mini-chart', {
+                height: 350,
+                trendLineColor: "rgba(41, 98, 255, 1)",
+                underLineColor: "rgba(41, 98, 255, 0.3)",
+                underLineBottomColor: "rgba(41, 98, 255, 0)",
+                isTransparent: false,
+                autosize: true,
+                largeChartUrl: ""
+            });
+        }
+        
+        function loadSymbolOverview() {
+            createTradingViewWidget('symbol-overview', 'symbol-overview', {
+                colorTheme: "light",
+                dateRange: "12M",
+                showChart: true,
+                showFloatingTooltip: false,
+                width: "100%",
+                height: 350
+            });
+        }
+        
+        function loadMarketOverview() {
+            createTradingViewWidget('market-overview', 'market-overview', {
+                colorTheme: "light",
+                dateRange: "12M",
+                showChart: true,
+                showFloatingTooltip: false,
+                tabs: [
+                    {
+                        title: "주식",
+                        symbols: [
+                            { s: "NASDAQ:AAPL", d: "Apple" },
+                            { s: "NASDAQ:GOOGL", d: "Google" },
+                            { s: "NASDAQ:TSLA", d: "Tesla" },
+                            { s: "NYSE:KO", d: "Coca Cola" }
+                        ],
+                        originalTitle: "Indices"
+                    }
+                ]
+            });
+        }
+        
+        function loadEconomicCalendar() {
+            createTradingViewWidget('economic-calendar', 'economic-calendar', {
+                colorTheme: "light",
+                isTransparent: false,
+                width: "100%",
+                height: 350,
+                importanceFilter: "-1,0,1",
+                countryFilter: "us,kr"
+            });
+        }
+        
+        function loadAllWidgets() {
+            console.log('모든 위젯 로딩 시작...');
+            
+            // 순차적으로 로딩 (동시 로딩시 충돌 방지)
+            setTimeout(() => loadAdvancedChart(), 500);
+            setTimeout(() => loadMiniChart(), 1000);
+            setTimeout(() => loadSymbolOverview(), 1500);
+            setTimeout(() => loadMarketOverview(), 2000);
+            setTimeout(() => loadEconomicCalendar(), 2500);
+        }
+        
+        // 페이지 로드시 자동 실행
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('페이지 로드 완료, 위젯들 초기화 시작');
+            
+            // 2초 후 모든 위젯 로드
+            setTimeout(() => {
+                loadAllWidgets();
+            }, 2000);
         });
-
-        // Add scroll effect to header
-        window.addEventListener('scroll', () => {
-            const header = document.querySelector('header');
-            if (window.scrollY > 100) {
-                header.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
-            } else {
-                header.style.boxShadow = 'none';
-            }
+        
+        // 활성 버튼 관리
+        document.querySelectorAll('.btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+            });
         });
     </script>
 </body>
